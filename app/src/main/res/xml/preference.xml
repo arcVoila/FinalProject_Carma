@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_user_profile" >
+        <EditTextPreference
+            android:title="@string/pref_user_name"
+            android:summary="@string/pref_user_name_summary"
+            android:key="prefUsername"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_update_setting" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefSendReport"
+            android:summary="@string/pref_send_report_summary"
+            android:title="@string/pref_send_report" >
+        </CheckBoxPreference>
+
+        <Preference
+            android:key="blockedApps"
+            android:summary="@string/blockedApps_summary"
+            android:title="@string/blockedApps">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetPackage="com.example.archana.finalproject_carma"
+                android:targetClass="com.example.archana.finalproject_carma.ListPhoneApps"
+            />
+        </Preference>
+
+        <Preference
+            android:key="emergencyContacts"
+            android:summary="@string/emergencyContacts_summary"
+            android:title="@string/emergencyContacts" >
+            <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.example.archana.finalproject_carma"
+            android:targetClass="com.example.archana.finalproject_carma.EmergencyContact"
+            />
+        </Preference>
+
+        <ListPreference
+            android:key="safeSpots"
+            android:entries="@array/safeSpotArray"
+            android:entryValues="@array/safeSpotArrayValues"
+            android:summary="@string/safeSpots_summary"
+            android:title="@string/safeSpots" />
+    </PreferenceCategory>
+</PreferenceScreen>
