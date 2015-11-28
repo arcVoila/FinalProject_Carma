@@ -12,6 +12,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -93,12 +94,30 @@ public class BlockActivity extends Activity {
         else
             mButton4.setVisibility(View.INVISIBLE);
 
-
-
-
-
-
     }
+
+/*****************/
+
+    public void placePicker(View view){
+        SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(this);
+        String selectedSafeSpot = null;
+        if (spref.contains("safeSpots")) {
+            selectedSafeSpot = spref.getString("safeSpots", "");
+        }
+        String actualPlace = null;
+        switch(selectedSafeSpot){
+            case "1": actualPlace = "restaurants";break;
+            case "2": actualPlace = "parking spots";break;
+            case "3": actualPlace = "gas stations";break;
+            case "4": actualPlace = "coffee shops";break;
+        }
+        Log.d("SELECTED SAFE sPOT",selectedSafeSpot+"");
+        Uri gmmIntentUri = Uri.parse("geo:0.0?q="+actualPlace);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+    }
+    /*****************/
 
     public void callPerson2(View view){
 

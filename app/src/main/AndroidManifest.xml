@@ -59,6 +59,10 @@
             android:name=".PreferenceActivity"
             android:label="@string/title_activity_preference" >
         </activity>
+        <activity
+            android:name=".SafeSpotGoogleMaps"
+            android:label="@string/title_activity_safe_spot_google_maps" >
+        </activity>
     </application>
 
 </manifest>
