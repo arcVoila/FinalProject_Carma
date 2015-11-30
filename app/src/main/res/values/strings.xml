@@ -2,10 +2,10 @@
     <string name="app_name">Carma</string>
     <string name="hello_world">Hello world! Welcome to Carma</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_block">BlockActivity</string>
+    <string name="title_activity_block">Carma</string>
     <string name="title_activity_list_phone_apps">Phone Apps</string>
-    <string name="title_activity_emergency_contact">EmergencyContact</string>
-    <string name="title_activity_safe_place">SafePlace</string>
+    <string name="title_activity_emergency_contact">Emergency Contacts</string>
+    <string name="title_activity_safe_place">Safe Place</string>
     <string name="title_activity_preference">Settings</string>
 
 
