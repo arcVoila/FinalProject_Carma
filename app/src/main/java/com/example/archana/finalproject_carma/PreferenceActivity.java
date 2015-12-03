@@ -1,7 +1,10 @@
 package com.example.archana.finalproject_carma;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.util.Log;
@@ -16,6 +19,12 @@ public class PreferenceActivity extends Activity implements Preference.OnPrefere
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new PreferenceFrag()).commit();
+
+        ActionBar actionBar;
+        actionBar = getActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(
+                Color.parseColor("#9999FF"));
+        actionBar.setBackgroundDrawable(colorDrawable);
 
     }
 
@@ -47,9 +56,9 @@ public class PreferenceActivity extends Activity implements Preference.OnPrefere
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+     /*   if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

@@ -1,5 +1,6 @@
 package com.example.archana.finalproject_carma;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -9,6 +10,8 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -36,8 +39,10 @@ public class EmergencyContact extends ListActivity {
     HashMap<String,String> ec = new HashMap<String,String>();
     int checkedCounter = 1;
     SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferencesCheckedContacts;
     SharedPreferences phoneNos;
     SharedPreferences.Editor editor ;
+    SharedPreferences.Editor editorCheckedContacts;
 
 
     SharedPreferences.Editor phoneNoEditor ;
@@ -45,10 +50,20 @@ public class EmergencyContact extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_contact);
-        setContentView(R.layout.activity_list_phone_apps);
+       // setContentView(R.layout.activity_list_phone_apps);
 
-       String result = String.valueOf(new LoadApplications().execute());
+        ActionBar actionBar;
+        actionBar = getActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(
+                Color.parseColor("#9999FF"));
+        actionBar.setBackgroundDrawable(colorDrawable);
 
+
+        String result = String.valueOf(new LoadApplications().execute());
+        sharedPreferencesCheckedContacts = getApplicationContext()
+                .getSharedPreferences("noOfCheckedContacts", Context.MODE_PRIVATE);
+        editorCheckedContacts = sharedPreferencesCheckedContacts.edit();
+        checkedCounter = Integer.parseInt(sharedPreferencesCheckedContacts.getString("noOfCheckedContacts","1"));
         ListView listView = getListView();
         listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
         listView.setTextFilterEnabled(true);
@@ -94,8 +109,12 @@ public class EmergencyContact extends ListActivity {
                 .getSharedPreferences("emerContactNewFinal", Context.MODE_PRIVATE);
          editor = sharedPreferences.edit();
 
+        sharedPreferencesCheckedContacts = getApplicationContext()
+                .getSharedPreferences("noOfCheckedContacts", Context.MODE_PRIVATE);
+        editorCheckedContacts = sharedPreferencesCheckedContacts.edit();
 
-        if (checkedCounter == 4 && item.isChecked())
+
+        if ( checkedCounter == 3 && item.isChecked())
            {
                Log.d("at 5 contacts",String.valueOf(item.getText())+"");
                getListView().setItemChecked(position, false);
@@ -123,10 +142,8 @@ public class EmergencyContact extends ListActivity {
 
         }
 
-
-
-
-
+        editorCheckedContacts.putString("noOfCheckedContacts",checkedCounter+"");
+        editorCheckedContacts.commit();
     }
 
    /* public void updateBlockedAppList(View view){
@@ -145,6 +162,11 @@ public class EmergencyContact extends ListActivity {
 
 
 
+    private static final String[] PROJECTION = new String[] {
+            ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
+            ContactsContract.Contacts.DISPLAY_NAME,
+            ContactsContract.CommonDataKinds.Phone.NUMBER
+    };
 
     private class LoadApplications extends AsyncTask<Void, Void, Void> {
         private ProgressDialog progress = null;
@@ -156,10 +178,36 @@ public class EmergencyContact extends ListActivity {
             ContentResolver cr = getContentResolver();
             Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                     null, null, null, null);
-            if (cur.getCount() > 0) {
+
+            Cursor cursor = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, PROJECTION, null, null, null);
+            if (cursor != null) {
+                try {
+                    final int nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+                    final int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
+                    String name, number;
+                    while (cursor.moveToNext()) {
+                        name = cursor.getString(nameIndex);
+                        number = cursor.getString(numberIndex);
+
+                        if(!contactList.contains(name))
+                        {
+                            contactList.add(name);
+                            ec.put(name,number);
+                        }
+                    }
+
+                } finally {
+                    cursor.close();
+                }
+            }
+
+          /*  if (cur.getCount() > 0) {
                 while (cur.moveToNext()) {
                     String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
                     String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
+
 
                     if (Integer.parseInt(cur.getString(
                             cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
@@ -172,17 +220,15 @@ public class EmergencyContact extends ListActivity {
                             String phoneNo = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                             if(!contactList.contains(name))
                             {
-
                                 contactList.add(name);
                                 ec.put(name,phoneNo);
                             }
-
                             //Toast.makeText(EmergencyContact.this, "Name: " + name + ", Phone No: " + phoneNo, Toast.LENGTH_SHORT).show();
                         }
                         pCur.close();
                     }
                 }
-            }
+            }*/
 
             Collections.sort(contactList);
 
@@ -225,9 +271,9 @@ public class EmergencyContact extends ListActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+       /* if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

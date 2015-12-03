@@ -37,22 +37,25 @@ import java.util.TreeMap;
 public class MainActivity extends Activity {
 
 
-    ActionBar actionBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+          getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
 
+        Log.e("CALLING","THIS");
+        if(drivingMode())
+           getWindow().getDecorView().setBackgroundColor(Color.parseColor("#FFE5E5"));
+        else
+            getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+        ActionBar actionBar;
         actionBar = getActionBar();
-
         ColorDrawable colorDrawable = new ColorDrawable(
                 Color.parseColor("#9999FF"));
         actionBar.setBackgroundDrawable(colorDrawable);
-
-
 
 
        // Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
@@ -62,25 +65,25 @@ public class MainActivity extends Activity {
         //if(needPermissionForBlocking(getBaseContext()))
             //printForegroundTask();
         setContentView(R.layout.activity_main);
-
         startService(new Intent(this, MonitorService.class));
 
+
     }
-    public void emergencyContactList(View view){
+    public Boolean drivingMode(){
 
-        //Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        Intent intent = new Intent(this,EmergencyContact.class);
-        startActivity(intent);
+        SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean drivingMode = false;
+        drivingMode = spref.getBoolean("drivingMode",false);
+        Log.e("DRIVING MODE",drivingMode+"");
+        return drivingMode;
+       // sharedPreferences.
     }
 
 
 
 
 
-    public void startAppActivity(View view){
-        Intent intent = new Intent(this,ListPhoneApps.class);
-        startActivity(intent);
-    }
+
  /*   public void initializeTimerTask(){
         timerTask = new TimerTask(){
             public void run() {
@@ -144,8 +147,22 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onResume() {
+        if(drivingMode())
+            getWindow().getDecorView().setBackgroundColor(Color.parseColor("#FFE5E5"));
+        else
+            getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         super.onResume();
        // startTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        if(drivingMode())
+            getWindow().getDecorView().setBackgroundColor(Color.parseColor("#FFE5E5"));
+        else
+            getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+        super.onPause();
+        // startTimer();
     }
 
     /*public void startTimer() {
@@ -165,10 +182,10 @@ public class MainActivity extends Activity {
         this.startActivity(intent);
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+     /*   if (id == R.id.action_settings) {
             return true;
         }
-
+*/
         return super.onOptionsItemSelected(item);
     }
 }

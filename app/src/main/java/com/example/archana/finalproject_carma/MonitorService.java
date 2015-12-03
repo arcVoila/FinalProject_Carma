@@ -13,6 +13,7 @@ import android.app.ActivityManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
@@ -171,7 +172,7 @@ public class MonitorService extends Service
             for(String s : blockedAppList)
                 Log.i("BA",s);*/
 
-         if (blockedAppList.contains(currentApp) ) {
+         if (drivingMode() && blockedAppList.contains(currentApp)) {
                 Log.e("testing", "made it into the block");
                 Intent intent;
                 intent = new Intent(getBaseContext(),BlockActivity.class);
@@ -180,6 +181,17 @@ public class MonitorService extends Service
             }
         }
     }
+
+
+    public Boolean drivingMode(){
+        SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean drivingMode = false;
+        drivingMode = spref.getBoolean("drivingMode",false);
+        Log.e("DRIVING MODE",drivingMode+"");
+        return drivingMode;
+        // sharedPreferences.
+    }
+
 
     @Override
     public void onDestroy(){

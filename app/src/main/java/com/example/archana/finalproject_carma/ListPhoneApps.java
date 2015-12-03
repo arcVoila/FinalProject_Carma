@@ -1,5 +1,6 @@
 package com.example.archana.finalproject_carma;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -11,6 +12,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,6 +55,13 @@ public class ListPhoneApps extends ListActivity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_phone_apps);
+
+        ActionBar actionBar;
+        actionBar = getActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(
+                Color.parseColor("#9999FF"));
+        actionBar.setBackgroundDrawable(colorDrawable);
+
         packageManager = getPackageManager();
         new LoadApplications().execute();
 
@@ -106,7 +116,6 @@ public class ListPhoneApps extends ListActivity{
     public void updateBlockedAppList(View v){
 
      RelativeLayout r1 = (RelativeLayout)v.getParent();
-
      String app_name = r1.findViewById(R.id.app_name).toString();
      //String status = r1.findViewById(R.id.doneCheckBox).toString();
 
@@ -128,9 +137,9 @@ public class ListPhoneApps extends ListActivity{
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+    /*    if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -141,7 +150,9 @@ public class ListPhoneApps extends ListActivity{
         for (ApplicationInfo info : list) {
             try {
                 if (null != packageManager.getLaunchIntentForPackage(info.packageName)) {
-                    applist.add(info);
+                    if(!info.packageName.contains("carma"))
+                        applist.add(info);
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -183,6 +194,7 @@ public class ListPhoneApps extends ListActivity{
 
                 }
             });
+
               //ListView listView = getListView();
                // listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
             //ListView appNames = (ListView)findViewById(R.id.listView);

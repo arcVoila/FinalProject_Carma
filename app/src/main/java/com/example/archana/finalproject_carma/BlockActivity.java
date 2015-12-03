@@ -1,5 +1,6 @@
 package com.example.archana.finalproject_carma;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
@@ -10,6 +11,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -30,11 +33,20 @@ public class BlockActivity extends Activity {
     String phoneNo4;
     String phoneNo2;
     String phoneNo3;
+    ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_block);
+        actionBar = getActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(
+                Color.parseColor("#9999FF"));
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+        actionBar.setBackgroundDrawable(colorDrawable);
+
+
+
         setNamesForContacts();
     }
 
@@ -154,9 +166,9 @@ public class BlockActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+       /* if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
