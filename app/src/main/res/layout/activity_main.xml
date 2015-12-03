@@ -20,13 +20,22 @@
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/speed"
+        android:src="@drawable/milegraph"
         android:layout_marginTop="55dp"
         android:layout_below="@+id/welcome_text"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="55dp"
+        android:gravity="center"
+        android:id="@+id/modeText"
+        android:layout_alignEnd="@+id/welcome_text"
+        android:layout_below="@+id/imageView1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/welcome_text" />
 
 
     <!--

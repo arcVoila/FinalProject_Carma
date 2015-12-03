@@ -21,38 +21,40 @@
         android:layout_height="wrap_content"
         android:src="@drawable/blockcar"
         android:id="@+id/imageView"
-        android:layout_above="@+id/button2"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SEARCH SAFE SPOT"
         android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:background="#C7FBD3"
         android:layout_alignParentStart="true"
         android:onClick="placePicker"
-        android:textColor="@color/wallet_dim_foreground_inverse_holo_dark" />
+        android:textColor="@color/wallet_dim_foreground_inverse_holo_dark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/textView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/button2"
+        android:drawableLeft="@android:drawable/btn_star_big_on"
         android:onClick="callPerson2"
         android:layout_above="@+id/button3"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/button3" />
+        android:layout_alignEnd="@+id/button3"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/button3"
-        android:layout_above="@+id/button"
-        android:layout_alignParentEnd="true"
+        android:drawableLeft="@android:drawable/btn_star_big_on"
         android:onClick="callPerson3"
+        android:layout_above="@+id/button"
+        android:layout_alignEnd="@+id/button"
         android:layout_alignParentStart="true" />
 
     <Button
@@ -60,9 +62,10 @@
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/button4"
+        android:drawableLeft="@android:drawable/btn_star_big_on"
         android:onClick="callPerson4"
         android:layout_above="@+id/button2"
-        android:layout_alignEnd="@+id/button2"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/button2" />
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 
 
 import java.util.List;
@@ -45,18 +47,29 @@ public class MainActivity extends Activity {
 
           getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
-
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         Log.e("CALLING","THIS");
-        if(drivingMode())
+     /*   if(drivingMode())
            getWindow().getDecorView().setBackgroundColor(Color.parseColor("#FFE5E5"));
         else
-            getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+            getWindow().getDecorView().setBackgroundColor(Color.WHITE);*/
         ActionBar actionBar;
         actionBar = getActionBar();
         ColorDrawable colorDrawable = new ColorDrawable(
                 Color.parseColor("#9999FF"));
         actionBar.setBackgroundDrawable(colorDrawable);
+        TextView tv = (TextView)findViewById(R.id.modeText);
 
+        if(drivingMode()){
+            tv.setText("DRIVING");
+            tv.setTextColor(Color.parseColor("#991c26"));
+            tv.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        }
+        else{
+            tv.setText("MSGING");
+            tv.setTextColor(Color.parseColor("#2d944d"));
+            tv.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        }
 
        // Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
         //startActivity(intent);
@@ -147,20 +160,44 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onResume() {
-        if(drivingMode())
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+      /*  if(drivingMode())
             getWindow().getDecorView().setBackgroundColor(Color.parseColor("#FFE5E5"));
         else
-            getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+            getWindow().getDecorView().setBackgroundColor(Color.WHITE);*/
+        TextView tv = (TextView) findViewById(R.id.modeText);
+        if(drivingMode()){
+            tv.setText("DRIVING");
+            tv.setTextColor(Color.parseColor("#991c26"));
+            tv.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        }
+        else{
+            tv.setText("TEXTING");
+            tv.setTextColor(Color.parseColor("#2d944d"));
+            tv.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        }
         super.onResume();
        // startTimer();
     }
 
     @Override
     protected void onPause() {
-        if(drivingMode())
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+        TextView tv = (TextView) findViewById(R.id.modeText);
+        if(drivingMode()){
+            tv.setText("DRIVING");
+            tv.setTextColor(Color.parseColor("#991c26"));
+            tv.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        }
+        else{
+            tv.setText("TEXTING");
+            tv.setTextColor(Color.parseColor("#2d944d"));
+            tv.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        }
+      /*  if(drivingMode())
             getWindow().getDecorView().setBackgroundColor(Color.parseColor("#FFE5E5"));
         else
-            getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+            getWindow().getDecorView().setBackgroundColor(Color.WHITE);*/
         super.onPause();
         // startTimer();
     }

@@ -21,6 +21,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.gms.common.SignInButton;
 
 import java.util.List;
 import java.util.Map;
@@ -86,7 +89,10 @@ public class BlockActivity extends Activity {
 
         Button mButton2=(Button)findViewById(R.id.button2);
         if(button2!=null)
-            mButton2.setText(button2);
+        {
+            mButton2.setText("CALL " + button2);
+           // mButton2.setBackgroundColor(Color.parseColor("#d2dee6"));
+        }
         else
             mButton2.setVisibility(View.INVISIBLE);
 
@@ -94,15 +100,19 @@ public class BlockActivity extends Activity {
         Button mButton3=(Button)findViewById(R.id.button3);
         if(button3!=null){
 
-            mButton3.setText(button3);
+            mButton3.setText("CALL " + button3);
+           // mButton3.setBackgroundColor(Color.parseColor("#d2dee6"));
         }
         else
            mButton3.setVisibility(View.INVISIBLE);
 
 
-        Button mButton4=(Button)findViewById(R.id.button4);
+       Button mButton4=(Button)findViewById(R.id.button4);
         if(button4!=null)
-             mButton4.setText(button4);
+        {
+            mButton4.setText("CALL " + button4);
+            mButton4.setBackgroundColor(Color.parseColor("#d2dee6"));
+        }
         else
             mButton4.setVisibility(View.INVISIBLE);
 
@@ -117,12 +127,24 @@ public class BlockActivity extends Activity {
             selectedSafeSpot = spref.getString("safeSpots", "");
         }
         String actualPlace = null;
-        switch(selectedSafeSpot){
-            case "1": actualPlace = "restaurants";break;
-            case "2": actualPlace = "parking spots";break;
-            case "3": actualPlace = "gas stations";break;
-            case "4": actualPlace = "coffee shops";break;
+        if(selectedSafeSpot!=null) {
+            switch (selectedSafeSpot) {
+                case "1":
+                    actualPlace = "restaurants";
+                    break;
+                case "2":
+                    actualPlace = "parking spots";
+                    break;
+                case "3":
+                    actualPlace = "gas stations";
+                    break;
+                case "4":
+                    actualPlace = "coffee shops";
+                    break;
+            }
         }
+        else
+            Toast.makeText(getApplicationContext()," Please select type of place from settings ", Toast.LENGTH_SHORT).show();
         Log.d("SELECTED SAFE sPOT",selectedSafeSpot+"");
         Uri gmmIntentUri = Uri.parse("geo:0.0?q="+actualPlace);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
